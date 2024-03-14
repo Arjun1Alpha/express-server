@@ -3,6 +3,7 @@ import DataModel from "../models/saveEveryModel.js";
 
 
 const getAllData = async (req, res) => {
+    console.log(`${req.body}`);
     try {
         const key = Date.now().toString();
         const data = req.body;
