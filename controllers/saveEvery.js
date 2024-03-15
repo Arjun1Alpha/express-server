@@ -6,11 +6,14 @@ const getAllData = async (req, res) => {
     try {
         const key = Date.now().toString();
         const data = req.body;
-        if (data.action == 'Meeting.scheduled' || data.action == 'Meeting.cancelled' || data.action == 'Meeting.rescheduled') {
-            const newData = new DataModel({ key, data });
-            await newData.save();
-            res.json({ key });
-        } 
+        // if (data.action == 'Meeting.scheduled' || data.action == 'Meeting.cancelled' || data.action == 'Meeting.rescheduled') {
+        //     const newData = new DataModel({ key, data });
+        //     await newData.save();
+        //     res.json({ key });
+        // } 
+        const newData = new DataModel({ key, data });
+        await newData.save();
+        res.json({ key });
     } catch (error) {
         console.error('Error saving data:', error);
         res.status(500).json({ error: 'Internal server error' });
