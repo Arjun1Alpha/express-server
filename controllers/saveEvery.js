@@ -4,7 +4,7 @@ import DataModel from "../models/saveEveryModel.js";
 const getAllData = async (req, res) => {
   try {
     const data = req.body;
-    const _id = req.body?.entity.id;
+    const key = req.body?.entity.id;
     const { approved, confirmed, cancelled } = req.body?.entity;
     let status;
     if (cancelled) {
@@ -14,7 +14,7 @@ const getAllData = async (req, res) => {
     } else {
       status = "pending";
     }
-    let existingData = await DataModel.findOne({ _id });
+    let existingData = await DataModel.findOne({ key });
 
     if (existingData) {
       if (typeof existingData.data.message === "string") {
@@ -28,9 +28,9 @@ const getAllData = async (req, res) => {
       }
       await existingData.save();
 
-      res.json({ _id });
+      res.json({ key });
     } else {
-      if (data.action === "Meeting.scheduled") {
+    //   if (data.action === "Meeting.scheduled") {
         let attendee = data.entity.attendees.filter(
           (item) => data.entity.host.id != item.id
         );
@@ -41,12 +41,12 @@ const getAllData = async (req, res) => {
           attendee: attendee[0],
           meeting: newMeetingData,
         };
-        const newData = new DataModel({ _id, status, data: realData });
+        const newData = new DataModel({ key, status, data: realData });
         await newData.save();
         res.json({ message: "Meeting generated" });
-      } else {
-        res.json({ message: "Wrong call while creating a meeting" });
-      }
+    //   } else {
+    //     res.json({ message: "Wrong call while creating a meeting" });
+    //   }
     }
   } catch (error) {
     console.error("Error saving data:", error);

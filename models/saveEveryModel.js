@@ -72,7 +72,7 @@ const mainSchema = new mongoose.Schema(
 );
 
 const dataSchema = new mongoose.Schema({
-  _id: { type: String, unique: true },
+  key: { type: String, unique: true },
   status: String,
   data: mainSchema,
 });
