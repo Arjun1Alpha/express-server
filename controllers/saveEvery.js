@@ -4,8 +4,8 @@ import DataModel from "../models/saveEveryModel.js";
 
 const getAllData = async (req, res) => {
     try {
-        const key = Date.now().toString();
         const data = req.body;
+        const key = req.body?.entity.id;
         // if (data.action == 'Meeting.scheduled' || data.action == 'Meeting.cancelled' || data.action == 'Meeting.rescheduled') {
         //     const newData = new DataModel({ key, data });
         //     await newData.save();
