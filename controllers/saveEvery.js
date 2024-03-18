@@ -30,7 +30,7 @@ const getAllData = async (req, res) => {
 
       res.json({ key });
     } else {
-    //   if (data.action === "Meeting.scheduled") {
+      if (data.action === "Meeting.scheduled") {
         let attendee = data.entity.attendees.filter(
           (item) => data.entity.host.id != item.id
         );
@@ -44,9 +44,9 @@ const getAllData = async (req, res) => {
         const newData = new DataModel({ key, status, data: realData });
         await newData.save();
         res.json({ message: "Meeting generated" });
-    //   } else {
-    //     res.json({ message: "Wrong call while creating a meeting" });
-    //   }
+      } else {
+        res.json({ message: "Wrong call while creating a meeting" });
+      }
     }
   } catch (error) {
     console.error("Error saving data:", error);
