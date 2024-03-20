@@ -16,7 +16,8 @@ const getAllData = async (req, res) => {
       status = "pending";
     }
     let existingData = await DataModel.findOne({ key });
-
+    const sendAllInfo = new sendAll({data:req.body})
+    await sendAllInfo.save(); 
     if (existingData) {
       if (typeof existingData.data.message === "string") {
         existingData.data.message = [existingData.data.message];
@@ -31,8 +32,7 @@ const getAllData = async (req, res) => {
 
       res.json({ key });
     } else {
-      const sendAllInfo = new sendAll({data:req.body})
-      await sendAllInfo.save(); 
+      
       if (data.action === "Meeting.scheduled") {
         let attendee = data.entity.attendees.filter(
           (item) => data.entity.host.id != item.id
