@@ -19,10 +19,10 @@ const getAllData = async (req, res) => {
     const sendAllInfo = new sendAll({data:req.body})
     await sendAllInfo.save(); 
     if (existingData) {
-      if (typeof existingData.data.message === "string" || typeof existingData.data.message == null) {
+      // if (typeof existingData.data.message === "string" || typeof existingData.data.message == null) {
         existingData.data.message = [existingData.data.message];
         existingData.data.metadata = [existingData.data.metadata];
-      }
+      // }
       existingData.data.message.push(data.message);
       existingData.data.metadata.push(data.metadata);
       if (existingData.status !== status) {
