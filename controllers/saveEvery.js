@@ -20,8 +20,8 @@ const getAllData = async (req, res) => {
     await sendAllInfo.save();
     if (existingData) {
       if (existingData.data.message == null) {
-        existingData.data.message = [existingData.data.message];
-        existingData.data.metadata = [existingData.data.metadata];
+        existingData.data.message = [];
+        existingData.data.metadata = [];
       }
       existingData.data.message.push(data.message);
       existingData.data.metadata.push(data.metadata);
