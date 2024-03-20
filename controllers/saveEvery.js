@@ -18,13 +18,20 @@ const getAllData = async (req, res) => {
     let existingData = await DataModel.findOne({ key });
     const sendAllInfo = new sendAll({ data: req.body });
     await sendAllInfo.save();
+    let newUpdateData = {};
+
     if (existingData) {
-      if (existingData.data.message == null) {
-        existingData.data.message = [];
-        existingData.data.metadata = [];
+      if (existingData.data.updates == "") {
+        newUpdateData = {
+          created_at: data?.created_at,
+          message: data?.message,
+          previous_start: data?.metadata.previous_start,
+          previous_end: data?.metadata.previous_end,
+          latest_start: data?.entity.start,
+          latest_end: data?.entity.end,
+        };
       }
-      existingData.data.message.push(data.message);
-      existingData.data.metadata.push(data.metadata);
+      existingData.data.updates.push(newUpdateData);
       if (existingData.status !== status) {
         existingData.status = status;
       }
@@ -38,7 +45,7 @@ const getAllData = async (req, res) => {
         );
         let { host, attendees, ...newMeetingData } = data.entity;
         let realData = {
-          ...data,
+          updates: [],
           host: data.entity.host,
           attendee: attendee[0],
           meeting: newMeetingData,

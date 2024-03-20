@@ -58,18 +58,21 @@ const mettingSchema = new mongoose.Schema({
   cancelled: Boolean,
   conference_password: String,
   conference_url: String,
- 
 });
-
-const mainSchema = new mongoose.Schema(
-  {
-    message: Array,
-    metadata: Array,
-    meeting: mettingSchema,
-    attendee: attendeeSchema,
-    host: hostSchema,
-  }
-);
+const updatedData = new mongoose.Schema({
+  created_at: Date,
+  message: String,
+  previous_start: Date,
+  previous_end: Date,
+  latest_start: Date,
+  latest_end: Date
+});
+const mainSchema = new mongoose.Schema({
+  updates: [updatedData],
+  meeting: mettingSchema,
+  attendee: attendeeSchema,
+  host: hostSchema,
+});
 
 const dataSchema = new mongoose.Schema({
   key: { type: String, unique: true },
