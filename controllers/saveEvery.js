@@ -21,19 +21,18 @@ const getAllData = async (req, res) => {
     let newUpdateData = {};
 
     if (existingData) {
-      if (data.action === "Meeting.rescheduled") {
-
+      if (data.action === "Meeting.rescheduled" && data.action === "Meeting.cancelled") {
         newUpdateData = {
           created_at: data?.created_at,
           message: data?.message,
-          previous_start: data?.metadata.previous_start,
-          previous_end: data?.metadata.previous_end,
+          previous_start: data.metadata?.previous_start,
+          previous_end: data.metadata?.previous_end,
           latest_start: data?.entity.start,
           latest_end: data?.entity.end,
         };
         let { host, attendees, ...newMeetingData } = data.entity;
 
-        existingData.data.meeting = newMeetingData
+        existingData.data.meeting = newMeetingData;
         existingData.data.updates.push(newUpdateData);
         if (existingData.status !== status) {
           existingData.status = status;
@@ -41,7 +40,7 @@ const getAllData = async (req, res) => {
         await existingData.save();
 
         res.json({ key });
-      }
+      } 
     } else {
       if (data.action === "Meeting.scheduled") {
         let attendee = data.entity.attendees.filter(
