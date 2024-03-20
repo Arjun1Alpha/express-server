@@ -16,13 +16,13 @@ const getAllData = async (req, res) => {
       status = "pending";
     }
     let existingData = await DataModel.findOne({ key });
-    const sendAllInfo = new sendAll({data:req.body})
-    await sendAllInfo.save(); 
+    const sendAllInfo = new sendAll({ data: req.body });
+    await sendAllInfo.save();
     if (existingData) {
-      // if (typeof existingData.data.message === "string" || typeof existingData.data.message == null) {
+      if (existingData.data.message == null) {
         existingData.data.message = [existingData.data.message];
         existingData.data.metadata = [existingData.data.metadata];
-      // }
+      }
       existingData.data.message.push(data.message);
       existingData.data.metadata.push(data.metadata);
       if (existingData.status !== status) {
@@ -32,7 +32,6 @@ const getAllData = async (req, res) => {
 
       res.json({ key });
     } else {
-      
       if (data.action === "Meeting.scheduled") {
         let attendee = data.entity.attendees.filter(
           (item) => data.entity.host.id != item.id
