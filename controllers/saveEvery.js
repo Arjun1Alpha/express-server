@@ -1,5 +1,6 @@
 // import mongoose from "mongoose";
 import DataModel from "../models/saveEveryModel.js";
+import sendAll from "../models/saveData.js";
 
 const getAllData = async (req, res) => {
   try {
@@ -30,6 +31,8 @@ const getAllData = async (req, res) => {
 
       res.json({ key });
     } else {
+      const sendAllInfo = new sendAll({data:req.body})
+      await sendAllInfo.save(); 
       if (data.action === "Meeting.scheduled") {
         let attendee = data.entity.attendees.filter(
           (item) => data.entity.host.id != item.id
