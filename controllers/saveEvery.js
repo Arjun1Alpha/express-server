@@ -21,7 +21,7 @@ const getAllData = async (req, res) => {
     let newUpdateData = {};
 
     if (existingData) {
-      if (existingData.data.updates == "") {
+      // if (existingData.data.updates == "") {
         newUpdateData = {
           created_at: data?.created_at,
           message: data?.message,
@@ -30,7 +30,7 @@ const getAllData = async (req, res) => {
           latest_start: data?.entity.start,
           latest_end: data?.entity.end,
         };
-      }
+      // }
       existingData.data.updates.push(newUpdateData);
       if (existingData.status !== status) {
         existingData.status = status;
