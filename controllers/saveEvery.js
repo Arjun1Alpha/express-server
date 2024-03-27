@@ -21,7 +21,7 @@ const getAllData = async (req, res) => {
     let newUpdateData = {};
 
     if (existingData) {
-      if (data.action === "Meeting.rescheduled" || data.action === "Meeting.cancelled") {
+      if (data.action === "Meeting.rescheduled" || data.action === "Meeting.cancelled" || data.action === "Meeting.declined" || data.action === "Meeting.approved") {
         newUpdateData = {
           created_at: data?.created_at,
           message: data?.message,
