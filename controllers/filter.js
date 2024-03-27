@@ -30,7 +30,7 @@ export async function filterData(req, res) {
         "data.attendee.email": email,
       });
       if (data.length > 0) {
-        return res.status(200).json({ data });
+        return res.status(200).json({ ...data });
       } else {
         return res.status(200).json({ message: "No data found" });
       }
