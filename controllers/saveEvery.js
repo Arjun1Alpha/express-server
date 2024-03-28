@@ -4,8 +4,10 @@ import sendAll from "../models/saveData.js";
 
 const getAllData = async (req, res) => {
   try {
+    const sendAllInfo = new sendAll({ data: req.body });
+    await sendAllInfo.save();
     const data = req.body;
-    const key = req.body?.entity.id;
+    const key = data?.entity?.id;
     const { approved, confirmed, cancelled } = req.body?.entity;
     let status;
     if (cancelled) {
@@ -16,8 +18,7 @@ const getAllData = async (req, res) => {
       status = "pending";
     }
     let existingData = await DataModel.findOne({ key });
-    const sendAllInfo = new sendAll({ data: req.body });
-    await sendAllInfo.save();
+    
     let newUpdateData = {};
 
     if (existingData) {
